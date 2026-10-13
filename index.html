@@ -60,9 +60,9 @@
   color-scheme: dark;
 }
 
-html { background: var(--chocolate); }
+html { background: #64100f; }
 @media (prefers-reduced-motion: no-preference) { html { scroll-behavior: smooth; } }
-body { background: var(--chocolate); color: var(--vanilla); font-family: var(--font-sans); font-size: 16px; line-height: 1.6; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+body { margin: 0; color: var(--vanilla); font-family: var(--font-sans); font-size: 16px; line-height: 1.6; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
 img { max-width: 100%; height: auto; display: block; }
 a { color: inherit; }
 p, h1, h2, h3, ul, figure { margin: 0; }
@@ -191,7 +191,7 @@ b { font-weight: 700; }
 /* ============ models: hang tags ============ */
 .models { background: linear-gradient(180deg, #d8a594 0%, #e2b5a5 34px, #ebc8bb 72px, #f0d4c9 120px, #f3dccb 200px, #f8f0cc 44%, #c9d7d6 calc(100% - 360px), #b3c8d1 calc(100% - 260px), #c3d3d6 calc(100% - 170px), #d7dfdc calc(100% - 90px), #ecefe4 calc(100% - 30px), #f2f3e6 100%); color: var(--chocolate); padding-block: calc(var(--gap-start) * .62) calc(var(--gap-end) * .6); }
 .models-head { display: grid; gap: 16px; }
-.models-head .kicker { color: var(--bordeaux); }
+.models-head .kicker { color: var(--bordeaux); font-size: clamp(22px, 2.6vw, 34px); letter-spacing: .24em; font-weight: 500; line-height: 1.1; }
 .models-head h2 { font-size: clamp(96px, 13vw, 180px); color: var(--bordeaux); }
 
 .rack { position: relative; display: flex; justify-content: center; gap: clamp(20px, 5vw, 72px); padding-top: 64px; margin-top: 36px; }
@@ -765,11 +765,10 @@ b { font-weight: 700; }
     var c = (q[0] * r[0] * (q[0] - r[0]) * p[1] + r[0] * p[0] * (r[0] - p[0]) * q[1] + p[0] * q[0] * (p[0] - q[0]) * r[1]) / d;
     return function (x) { return a * x * x + b * x + c; };
   }
-  function rope(p, k, q, topLimit) {
+  function rope(p, k, q) {
     var pts = [p, k, q].sort(function (m, n) { return m[0] - n[0]; });
     var f = parabola(pts[0], pts[1], pts[2]);
     var x0 = pts[0][0], x1 = pts[2][0];
-    if (topLimit !== undefined) { while (x0 > -18 && f(x0 - 2) > topLimit) x0 -= 2; }
     var d = '', steps = 56;
     for (var i = 0; i <= steps; i++) {
       var x = x0 + (x1 - x0) * i / steps;
@@ -797,11 +796,14 @@ b { font-weight: 700; }
       tags[i].style.top = (k[1] + 18).toFixed(1) + 'px';
     });
     rack.style.height = Math.ceil(K[2][1] + 18 + h + 28) + 'px';
-    var top = [cxL - W * .14, y1 - h * .38];
-    var right1 = [W + 18, y1 + h * .57];
-    var left1 = [-18, y1 + h * 1.13];
-    var bottom = [W + 18, y1 + h * 2.25];
-    threadPath.setAttribute('d', rope(top, K[0], right1, -26) + rope(left1, K[1], right1) + rope(left1, K[2], bottom));
+    /* rope ends sit just past the screen edges, whatever the page gutter is */
+    var box = rack.getBoundingClientRect();
+    var L = -box.left - 2, R = document.documentElement.clientWidth - box.left + 2;
+    var top = [L, -22];
+    var right1 = [R, y1 + h * .57];
+    var left1 = [L, y1 + h * 1.13];
+    var bottom = [R, y1 + h * 2.25];
+    threadPath.setAttribute('d', rope(top, K[0], right1) + rope(left1, K[1], right1) + rope(left1, K[2], bottom));
     tintDecor();
   }
   var band = document.getElementById('models');
