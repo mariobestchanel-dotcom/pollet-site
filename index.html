@@ -191,7 +191,7 @@ b { font-weight: 700; }
 /* ============ models: hang tags ============ */
 .models { background: linear-gradient(180deg, #d8a594 0%, #e2b5a5 34px, #ebc8bb 72px, #f0d4c9 120px, #f3dccb 200px, #f8f0cc 44%, #c9d7d6 calc(100% - 360px), #b3c8d1 calc(100% - 260px), #c3d3d6 calc(100% - 170px), #d7dfdc calc(100% - 90px), #ecefe4 calc(100% - 30px), #f2f3e6 100%); color: var(--chocolate); padding-block: calc(var(--gap-start) * .62) calc(var(--gap-end) * .6); }
 .models-head { display: grid; gap: 16px; }
-.models-head .kicker { color: var(--bordeaux); font-size: clamp(22px, 2.6vw, 34px); letter-spacing: .24em; font-weight: 500; line-height: 1.1; }
+.models-head .kicker { position: relative; top: clamp(12px, 1.4vw, 20px); color: var(--bordeaux); font-size: clamp(22px, 2.6vw, 34px); letter-spacing: .24em; font-weight: 500; line-height: 1.1; }
 .models-head h2 { font-size: clamp(96px, 13vw, 180px); color: var(--bordeaux); }
 
 .rack { position: relative; display: flex; justify-content: center; gap: clamp(20px, 5vw, 72px); padding-top: 64px; margin-top: 36px; }
@@ -619,8 +619,8 @@ b { font-weight: 700; }
         </div>
       </div>
       <div class="contacts__actions">
-        <a class="btn btn--plate" href="https://t.me/pollet_studio" target="_blank" rel="noopener">Открыть профиль</a>
-        <a class="btn btn--line" href="https://ig.me/m/pollet_studio" target="_blank" rel="noopener">Написать в Direct</a>
+        <a class="btn btn--plate" href="https://ig.me/m/pollet_studio" target="_blank" rel="noopener">Написать в Direct</a>
+        <a class="btn btn--line" href="https://t.me/pollet_studio" target="_blank" rel="noopener">Написать в Telegram</a>
         <button class="copy" type="button" id="copyHandle">Скопировать ник</button>
       </div>
     </div>
